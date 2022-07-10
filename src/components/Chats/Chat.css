@@ -1,0 +1,97 @@
+.chat-container {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.room-name {
+    margin-top: 0;
+}
+
+.messages-container {
+    flex: 1;
+    overflow: auto;
+    border: 0.063rem solid black;
+    border-radius: 0.438rem 0.438rem 0 0;
+}
+
+.messages-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+
+.message-item {
+    width: 55%;
+    margin: 0.5rem;
+    word-break: break-word;
+    color: white;
+}
+
+.my-message li {
+    border-radius: 0.25rem;
+    padding: 0.75rem 0.5rem;
+    background-color: rgb(0, 132, 255);
+}
+
+.my-message {
+    margin-left: auto;
+}
+
+.my-message small {
+    color: black;
+    margin-left: auto;
+}
+
+.received-message {
+    margin-right: auto;
+}
+
+.received-message li {
+    border-radius: 0.25rem;
+    padding: 0.75rem 0.5rem;
+    background-color: #3f4042;
+}
+
+.received-message small {
+    color: black;
+    margin-right: auto;
+}
+
+.send-button {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    background: #000;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    width: 100%;
+}
+
+.input-field {
+    font-size: 1.25rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    outline: none;
+    resize: none;
+    border: 0.01em solid black;
+}
+
+.messages-container,
+.input-field,
+.send-button {
+    border-color: #9a9a9a;
+}
+.invite{
+    cursor: pointer;
+    transition: 0.2s all;
+}
+.invite:hover{
+    font-size: larger;
+}
