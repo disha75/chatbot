@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+const TYPING_STATUS = 'typingStatus';
 const SOCKET_SERVER_URL = "http://localhost:4000";
 
 const useChat = (chatId, name) => {
   const [messages, setMessages] = useState([]);
+  const [typing, setTyping] = useState(false);
   const socketRef = useRef();
 
   useEffect(() => {
@@ -21,6 +23,10 @@ const useChat = (chatId, name) => {
       setMessages((messages) => [...messages, incomingMessage]);
     });
 
+    socketRef.current.on(TYPING_STATUS, (status) => {
+      setTyping(status);
+    })
+
     return () => {
       socketRef.current.disconnect();
     };
@@ -33,7 +39,12 @@ const useChat = (chatId, name) => {
     });
   };
 
-  return { messages, sendMessage };
+  const sendTypingStatus = (name, typing) => {
+    console.log(name, typing, 'hello');
+    socketRef.current.emit(TYPING_STATUS, { name: name, typing: typing });
+  }
+
+  return { messages, sendMessage, sendTypingStatus,typing };
 };
 
 export default useChat;

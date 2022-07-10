@@ -9,7 +9,7 @@ import "./Chat.css";
 const Chat = (props) => {
   const params = useParams();
   const { id, name } = params;
-  const { messages, sendMessage } = useChat(id, name);
+  const { messages, sendMessage, sendTypingStatus, typing } = useChat(id, name);
   const [newMessage, setNewMessage] = React.useState("");
 
   const handleNewMessageChange = (event) => {
@@ -17,10 +17,26 @@ const Chat = (props) => {
   };
 
   const handleSendMessage = (event) => {
-    event.preventDefault();
     sendMessage({ message: newMessage, name, time: new Date() });
     setNewMessage("");
   };
+
+  const sendTyping = (event) => {
+    let typing = false;
+    if (event.which != 13) {
+      typing = true;
+      sendTypingStatus(name, typing);
+      setTimeout(() => {
+        typing = false;
+        sendTypingStatus(name, typing);
+      }, 2000);
+    } else {
+      event.preventDefault();
+      sendMessage({ message: newMessage, name, time: new Date() });
+      sendTypingStatus(name, typing);
+      setNewMessage("");
+    }
+  }
 
   return (
     <div>
@@ -51,11 +67,13 @@ const Chat = (props) => {
         <form onSubmit={handleSendMessage}>
           <Row sm={2}>
             <Col sm={10}>
+              {typing?.typing && <small>{typing?.name} is typing....</small>}
               <input
                 value={newMessage}
                 onChange={handleNewMessageChange}
                 placeholder="Write message..."
                 className="input-field"
+                onKeyDown={sendTyping}
               />
             </Col>
             <Col sm={2}>
